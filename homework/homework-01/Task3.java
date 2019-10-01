@@ -24,44 +24,46 @@ class Task3 {
 
         // 40 წევრიანი რენდომული მასივი
         if (a < b) {
-            randomArray = randomNumbers(a, b);
+            randomArray = randomNumbers(a, b, 40);
         } else {
-            randomArray = randomNumbers(b, a);
+            randomArray = randomNumbers(b, a, 40);
         }
 
         // მასივის დაბეჭდვა
         System.out.println(Arrays.toString(randomArray));
 
         // ლუწი რიცხვების რაოდენობა
-        System.out.println(String.format("მასივში %d ლუწი რიცხვია.", evenNumbers(randomArray)));
+        System.out.println(String.format("მასივში %d ლუწი რიცხვია.", countNumbers(randomArray, 0)));
 
         // კენტი რიცხვების რაოდენობა
-        System.out.println(String.format("მასივში %d კენტი რიცხვია.", oddNumbers(randomArray)));
+        System.out.println(String.format("მასივში %d კენტი რიცხვია.", countNumbers(randomArray, 1)));
 
         // ლუწი რიცხვების ჯამი
-        sumOfEvenNums = sumOfEvenNumbers(randomArray);
+        sumOfEvenNums = sumOfNumbers(randomArray, 0);
         System.out.println(String.format("მასივში ლუწი რიცხვების ჯამია %d.", sumOfEvenNums));
 
         // კენტი რიცხვების ჯამი
-        sumOfOddNums = sumOfOddNumbers(randomArray);
+        sumOfOddNums = sumOfNumbers(randomArray, 1);
         System.out.println(String.format("მასივში კენტი რიცხვების ჯამია %d.", sumOfOddNums));
 
         // 5 რანდომული რიცხვის მასივი
         if (sumOfEvenNums < sumOfOddNums) {
-            System.out.println(Arrays.toString(fiveRandomNumbers(sumOfEvenNums, sumOfOddNums)));
+            System.out.println(Arrays.toString(randomNumbers(sumOfEvenNums, sumOfOddNums, 5)));
         } else {
-            System.out.println(Arrays.toString(fiveRandomNumbers(sumOfOddNums, sumOfEvenNums)));
+            System.out.println(Arrays.toString(randomNumbers(sumOfOddNums, sumOfEvenNums, 5)));
         }
 
     }
 
-    private static int[] randomNumbers(int min, int max) {
-        int[] randomNumbersArray = new int[40];
+    /*
+    ქმნის რენდომულ მასივს min.max შუალედში.
+     */
+    private static int[] randomNumbers(int min, int max, int length) {
+        int[] randomNumbersArray = new int[length];
 
         Random random = new Random();
 
-        // ქმნის რენდომულ 40 წევრიან მასივს min.max შუალედში.
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < length; i++) {
             int randomNum = random.nextInt(max - min + 1) + min;
             randomNumbersArray[i] = randomNum;
         }
@@ -69,69 +71,33 @@ class Task3 {
         return randomNumbersArray;
     }
 
-    // ლუწი რიცხვების რაოდებობას ვიგებთ
-    private static int evenNumbers(int[] array) {
-        int even = 0;
+    /*
+    ლუწი/კენტი რიცხვების რაოდებობას ვიგებთ, თუ remainder არის 0 მაშინ ლუწ რიცხვებს, თუ 1 მაშინ კენტს.
+     */
+    private static int countNumbers(int[] array, int remainder) {
+        int total = 0;
 
         for (int num : array) {
-            if (num % 2 == 0) {
-                even++;
+            if (num % 2 == remainder) {
+                total++;
             }
         }
 
-        return even;
+        return total;
     }
 
-    // კენტი რიცხვების რაოდენობას ვიგებთ
-    private static int oddNumbers(int[] array) {
-        int odd = 0;
-
-        for (int num : array) {
-            if (num % 2 != 0) {
-                odd++;
-            }
-        }
-
-        return odd;
-    }
-
-    // ლუწი რიცხვების ჯამი
-    private static int sumOfEvenNumbers(int[] array) {
+    /*
+    კენტი/ლუწი რიცხვების ჯამი. თუ remainder არის 0 მაშინ ლუწ რიცხვებს, თუ 1 მაშინ კენტს.
+     */
+    private static int sumOfNumbers(int[] array, int remainder) {
         int sum = 0;
 
         for (int num : array) {
-            if (num % 2 == 0) {
+            if (num % 2 == remainder) {
                 sum = sum + num;
             }
         }
 
         return sum;
-    }
-
-    // კენტი რიცხვების ჯამი
-    private static int sumOfOddNumbers(int[] array) {
-        int sum = 0;
-
-        for (int num : array) {
-            if (num % 2 != 0) {
-                sum = sum + num;
-            }
-        }
-
-        return sum;
-    }
-
-    private static int[] fiveRandomNumbers(int min, int max) {
-        int[] randomNumbersArray = new int[5];
-
-        Random random = new Random();
-
-        // ქმნის რენდომულ 5 წევრიან მასივს min.max შუალედში.
-        for (int i = 0; i < 5; i++) {
-            int randomNum = random.nextInt(max - min + 1) + min;
-            randomNumbersArray[i] = randomNum;
-        }
-
-        return randomNumbersArray;
     }
 }
