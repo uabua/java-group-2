@@ -1,4 +1,4 @@
-package com.company.writing_in_files;
+﻿package com.company.writing_in_files;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -50,8 +50,8 @@ public class Main {
             }
 
             fileWriter.close();
-        } catch (IOException error) {
-            error.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -66,8 +66,8 @@ public class Main {
                 fileWriter.write("Programmer");
 
                 fileWriter.close();
-            } catch (IOException error) {
-                error.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -84,8 +84,8 @@ public class Main {
                 fileWriter.write(String.format("Programmer%d", i));
 
                 fileWriter.close();
-            } catch (IOException error) {
-                error.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -209,8 +209,8 @@ public class Main {
                 fileWriter.write(String.format("%d", i));
 
                 fileWriter.close();
-            } catch (IOException error) {
-                error.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
