@@ -16,11 +16,13 @@ public class Main {
         exerciseSeven();
         exerciseEight();
         exerciseNine();
+        exerciseFourteen(5, 2);
+        exerciseFifteen();
     }
 
     /*
     მთელი 24, 39, -90 რიცხვები ჩაწერეთ data.txt ფაილში, ფაილი შექმენით myFiles საქაღალდეში.
-     */
+    */
     private static void exerciseOne() {
         int[] numbers = {24, 39, -90};
 
@@ -213,5 +215,114 @@ public class Main {
                 e.printStackTrace();
             }
         }
+    }
+
+    /*
+    შეიტანეთ ორი a და b რიცხვები, ჩაწერეთ numbers.txt ფაილში ამ რიცხვებს შორის მოთავსებული 40 მთელი რიცხვი, დაადგინეთ რამდენია     ლუწი და რამდენი კენტი     ფაილში ჩაწერილ რიცხვებს შორის, მოახდინეთ ლუწი რიცხვებისა და კენტი რიცხვების ჯამის გამოტანა ეკრანზე და     მიღებულ ჯამებს შორის 5 შემთხვევითი რიცხვი ჩაწეროთ     ფაილში numbers2.txt ფაილში.
+     */
+    private static void exerciseFourteen(int a, int b) {
+        int min = Math.min(a, b);
+        int max = Math.max(a, b);
+        int evenCount = 0;
+        int oddCount = 0;
+        int evenSum = 0;
+        int oddSum = 0;
+
+        Random random = new Random();
+
+        try {
+            FileWriter fileWriter = new FileWriter("numbers.txt", true);
+
+            for (int i = 0; i < 40; i++) {
+                int randomNumber = random.nextInt(max - min + 1) + min;
+
+                fileWriter.write(String.format("%d\n", randomNumber));
+
+                if (randomNumber % 2 == 0) {
+                    evenCount++;
+                    evenSum += randomNumber;
+                } else {
+                    oddCount++;
+                    oddSum += randomNumber;
+                }
+            }
+
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(String.format("ლუწი რიცხვების რაოდენობა: %d", evenCount));
+        System.out.println(String.format("კენტი რიცხვების რაოდენობა: %d", oddCount));
+
+        System.out.println(String.format("ლუწი რიცხვების ჯამი: %d", evenSum));
+        System.out.println(String.format("კენტი რიცხვების ჯამი: %d", oddSum));
+
+        min = Math.min(evenSum, oddSum);
+        max = Math.max(evenSum, oddSum);
+
+        try {
+            FileWriter fileWriter = new FileWriter("numbers2.txt", true);
+
+            for (int i = 0; i < 5; i++) {
+                int randomNumber = random.nextInt(max - min + 1) + min;
+
+                fileWriter.write(String.format("%d\n", randomNumber));
+            }
+
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    კლავიატურიდან შეტანილი m<=50 და n<=50 ნატურალური რიცხვების მიხედვით. info.txt ფაილში ჩაწერეთ შემთხვევითი 1 ან 0 ციფრები m სტრიქონში და n სვეტში.     მოახდინეთ info.txt ფაილის წაკითხვა, დაითვალეთ რამდენი 1 და რამდენი 0 სიმბოლოა ჩაწერილი ფაილში.
+     */
+    private static void exerciseFifteen() {
+        int oneCount = 0;
+        int zeroCount = 0;
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("შეიყვანეთ მთელი რიცხვი: ");
+        int m = scanner.nextInt();
+
+        System.out.print("შეიყვანეთ მთელი რიცხვი: ");
+        int n = scanner.nextInt();
+
+        Random random = new Random();
+
+        if (m <= 50 && n <= 50) {
+            int[][] matrix = new int[m][n];
+
+            try {
+                FileWriter fileWriter = new FileWriter("info.txt", true);
+
+                for (int row = 0; row < m; row++) {
+                    for (int column = 0; column < n; column++) {
+                        int randomNumber = random.nextInt(2);
+                        matrix[row][column] = randomNumber;
+
+                        if (randomNumber == 1) {
+                            oneCount++;
+                        } else {
+                            zeroCount++;
+                        }
+
+                        fileWriter.write(String.format("%d ", matrix[row][column]));
+                    }
+
+                    fileWriter.write("\n");
+                }
+
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println(String.format("ერთების რაოდენობა: %d", oneCount));
+        System.out.println(String.format("ნულების რაოდენობა: %d", zeroCount));
     }
 }
